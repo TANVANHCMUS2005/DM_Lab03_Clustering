@@ -1,0 +1,9 @@
+# Bỏ qua tât cả mọi file/thư mục con bên trong data
+Group_11/data/*
+
+# NHƯNG hãy tha mạng, không được bỏ qua file .gitkeep này
+!Group_11/data/.gitkeep
+
+# Bỏ qua các file cache của Python/Jupyter
+__pycache__/
+.ipynb_checkpoints/
