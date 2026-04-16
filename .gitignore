@@ -1,8 +1,8 @@
-# Bỏ qua tât cả mọi file/thư mục con bên trong data
+# Bỏ qua tất cả mọi file/thư mục con bên trong data (như .csv, .json)
 Group_11/data/*
 
-# NHƯNG hãy tha mạng, không được bỏ qua file .gitkeep này
-!Group_11/data/.gitkeep
+# Ngoại trừ file nén .zip chứa dataset để được đẩy lên GitHub
+!Group_11/data/*.zip
 
 # Bỏ qua các file cache của Python/Jupyter
 __pycache__/
