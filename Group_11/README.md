@@ -19,6 +19,11 @@
 
 2. Các bước thực thi chính sẽ được tiến hành ở thư mục `notebooks/` để hiển thị trực quan nhất tiến trình cũng như kết quả đồ thị.
 
+## Dữ liệu Thực nghiệm (Dataset)
+Do giới hạn dung lượng của tệp tin, dữ liệu được nén tại thư mục `data/` trong kho lưu trữ này (dưới dạng file `.zip`).
+Tuy nhiên, để phục vụ yêu cầu kiểm tra và dự phòng, toàn bộ Data (bao gồm file CSV và JSON gốc) đã được upload bổ sung qua Google Drive.
+👉 **https://drive.google.com/file/d/1tT2zWW_E_LeHuCMADsTn649UYk0TqwAe/view?usp=sharing**
+
 ## Phân công (Tham khảo `PhanCong.md`)
 - Thành viên 1: Setup data, xử lý dữ liệu và tính toán tỷ lệ Counter (utils.py).
 - Thành viên 2: Xây dựng giải thuật phân cụm chính (model.py) và metrics.py.
