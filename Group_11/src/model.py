@@ -5,6 +5,7 @@ import torch.nn.functional as F
 class RatingEncoder(nn.Module):
     """
     Bộ mã hóa cho Bảng xếp hạng Neural (NRT).
+    Kiến trúc: 4 lớp ẩn FC với LeakyReLU, output Exponential (Figure 16 trong bài báo).
     """
     def __init__(self, input_dim):
         super().__init__()
@@ -27,6 +28,7 @@ class RatingEncoder(nn.Module):
 class NRT(nn.Module):
     """
     Bảng Xếp hạng Neural (Neural Rating Table) dự đoán tỷ lệ thắng bằng Bradley-Terry.
+    Theo Section 3.1 và Figure 16 trong bài báo.
     """
     def __init__(self, input_dim):
         super().__init__()
@@ -35,19 +37,25 @@ class NRT(nn.Module):
     def forward(self, comp_A, comp_B):
         rating_A = self.encoder(comp_A)
         rating_B = self.encoder(comp_B)
-        # Mô hình Bradley-Terry 
+        # Mô hình Bradley-Terry (Công thức 1)
         expected_win_A = rating_A / (rating_A + rating_B)
         return expected_win_A, rating_A, rating_B
 
 class VQLayer(nn.Module):
     """
-    Lớp Lượng tử hóa Vector (Vector Quantization) tích hợp VQ Mean Loss.
+    Lớp Lượng tử hóa Vector (Vector Quantization).
+    Triển khai theo Section 3.2.2, Equations (5), (10), (11), (12) trong bài báo.
+
+    Trả về 3 loss riêng biệt tách theo gradient flow (Eq. 12):
+    - loss_codebook: MSE(sg[ze], zq) → cập nhật codebook di chuyển về phía encoder output
+    - loss_commit:   MSE(ze, sg[zq]) → cập nhật encoder di chuyển về phía codebook
+    - loss_mean:     MSE(sg[ze], mean_ek) → cập nhật codebook chống sụp đổ từ điển mã (Eq.11)
     """
     def __init__(self, num_embeddings, embedding_dim, beta_N=0.01, beta_M=0.25):
         super().__init__()
         self.num_embeddings = num_embeddings
         self.embedding_dim = embedding_dim
-        # Khởi tạo các siêu tham số theo thiết lập chuẩn của bài báo 
+        # Khởi tạo các siêu tham số theo thiết lập chuẩn của bài báo (Section 4.3)
         self.beta_N = beta_N 
         self.beta_M = beta_M 
         
@@ -55,7 +63,17 @@ class VQLayer(nn.Module):
         self.codebook.weight.data.uniform_(-1.0 / num_embeddings, 1.0 / num_embeddings)
 
     def forward(self, z_e):
-        # z_e shape: (batch_size, embedding_dim)
+        """
+        Args:
+            z_e: Latent code liên tục từ encoder, shape (batch_size, embedding_dim).
+
+        Returns:
+            z_q_st:    Quantized code với straight-through gradient (Eq. 6).
+            loss_codebook: Codebook loss → gradient chỉ đến codebook.
+            loss_commit:   Commitment loss → gradient chỉ đến encoder.
+            loss_mean:     VQ Mean loss → gradient chỉ đến codebook (Eq. 11).
+            min_encoding_indices: Chỉ số cụm gần nhất, shape (batch_size, 1).
+        """
         # Tính khoảng cách Euclid từ z_e đến các vector trong codebook
         distances = (torch.sum(z_e**2, dim=1, keepdim=True) 
                     + torch.sum(self.codebook.weight**2, dim=1)
@@ -65,21 +83,30 @@ class VQLayer(nn.Module):
         min_encoding_indices = torch.argmin(distances, dim=1).unsqueeze(1)
         z_q = self.codebook(min_encoding_indices).squeeze(1)
 
-        # Suy hao VQ tiêu chuẩn (L_vq) 
-        loss_vq = F.mse_loss(z_q.detach(), z_e)
+        # --- Eq. (12): Gradient flow cho từng thành phần ---
 
-        # Suy hao VQ Mean (L_mean) để chống sụp đổ từ điển mã 
+        # Codebook loss (Lvq cho codebook): MSE(sg[ze], zq)
+        # Gradient chỉ chảy đến codebook, đẩy codebook vectors về phía encoder output
+        loss_codebook = F.mse_loss(z_e.detach(), z_q)
+
+        # Commitment loss (Lvq cho encoder): MSE(ze, sg[zq])
+        # Gradient chỉ chảy đến encoder, đẩy encoder output về phía codebook
+        loss_commit = F.mse_loss(z_q.detach(), z_e)
+
+        # VQ Mean Loss (Eq. 11): MSE(sg[ze], mean_ek)
+        # Gradient chỉ chảy đến codebook, chống sụp đổ từ điển mã
         mean_codebook = torch.mean(self.codebook.weight, dim=0)
-        loss_mean = F.mse_loss(z_e, mean_codebook.expand_as(z_e).detach())
+        loss_mean = F.mse_loss(z_e.detach(), mean_codebook.expand_as(z_e))
 
-        # Stop-gradient (gradient copying) 
-        z_q = z_e + (z_q - z_e).detach()
+        # Stop-gradient / Straight-through estimator (Eq. 6)
+        z_q_st = z_e + (z_q - z_e).detach()
 
-        return z_q, loss_vq, loss_mean, min_encoding_indices
+        return z_q_st, loss_codebook, loss_commit, loss_mean, min_encoding_indices
 
 class CounterDecoder(nn.Module):
     """
     Bộ giải mã cho phần dư khắc chế.
+    Kiến trúc: 3 lớp ẩn FC với LeakyReLU, output Tanh (Figure 17 trong bài báo).
     """
     def __init__(self, embedding_dim):
         super().__init__()
@@ -101,6 +128,14 @@ class CounterDecoder(nn.Module):
 class NCT(nn.Module):
     """
     Bảng Khắc chế Neural (Neural Counter Table) với Mạng Siamese.
+    Triển khai theo Section 3.2.2, Figure 2 và Figure 17 trong bài báo.
+
+    Returns:
+        residual:      Phần dư khắc chế dự đoán (x1 - x2) / 2 (Figure 2).
+        loss_codebook: Loss cập nhật codebook (Eq. 12: ∂Lvq/∂Ck).
+        loss_commit:   Loss commitment cho encoder (Eq. 12: βN × ∂Lvq/∂Ce).
+        loss_mean:     VQ Mean Loss cho codebook (Eq. 12: βM × ∂Lmean/∂Ck).
+        idx_A, idx_B:  Nhãn cụm (cluster indices) của team A và B.
     """
     def __init__(self, input_dim, num_embeddings=9, embedding_dim=128):
         super().__init__()
@@ -122,15 +157,17 @@ class NCT(nn.Module):
         z_e_B = self.encoder(comp_B)
 
         # 2. Lượng tử hóa vector (VQ) 
-        z_q_A, loss_vq_A, loss_mean_A, idx_A = self.vq(z_e_A)
-        z_q_B, loss_vq_B, loss_mean_B, idx_B = self.vq(z_e_B)
+        z_q_A, loss_cb_A, loss_cm_A, loss_mean_A, idx_A = self.vq(z_e_A)
+        z_q_B, loss_cb_B, loss_cm_B, loss_mean_B, idx_B = self.vq(z_e_B)
 
-        # 3. Tính toán phần dư đối xứng ngược (x1 - x2) / 2 
+        # 3. Tính toán phần dư đối xứng ngược (Figure 2)
         x1 = self.decoder(z_q_A, z_q_B)
         x2 = self.decoder(z_q_B, z_q_A)
         residual = (x1 - x2) / 2.0
 
-        loss_vq = (loss_vq_A + loss_vq_B) / 2.0
+        # Trung bình losses theo Eq. (10) và (11)
+        loss_codebook = (loss_cb_A + loss_cb_B) / 2.0
+        loss_commit = (loss_cm_A + loss_cm_B) / 2.0
         loss_mean = (loss_mean_A + loss_mean_B) / 2.0
 
-        return residual, loss_vq, loss_mean, idx_A, idx_B
+        return residual, loss_codebook, loss_commit, loss_mean, idx_A, idx_B
