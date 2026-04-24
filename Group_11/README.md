@@ -20,9 +20,21 @@
 2. Các bước thực thi chính sẽ được tiến hành ở thư mục `notebooks/` để hiển thị trực quan nhất tiến trình cũng như kết quả đồ thị.
 
 ## Dữ liệu Thực nghiệm (Dataset)
-Do giới hạn dung lượng của tệp tin, dữ liệu được nén tại thư mục `data/` trong kho lưu trữ này (dưới dạng file `.zip`).
-Tuy nhiên, để phục vụ yêu cầu kiểm tra và dự phòng, toàn bộ Data (bao gồm file CSV và JSON gốc) đã được upload bổ sung qua Google Drive.
-👉 **https://drive.google.com/file/d/1tT2zWW_E_LeHuCMADsTn649UYk0TqwAe/view?usp=sharing**
+Nhóm hiện dùng dataset mô phỏng **Simple Combination Game** để tái hiện thực nghiệm chính của bài báo.
+
+- File dữ liệu: `data/simple_combination_game.csv`
+- File sinh dữ liệu: `src/synthetic_data.py`
+- Mô tả: 20 phần tử, mỗi composition có 3 phần tử, 100,000 matches, xác suất thắng theo công thức trong Section 4.1.1 của paper.
+
+Dataset này được sinh lại từ mô tả của bài báo, không phụ thuộc nguồn mã công khai bên ngoài.
+
+## Kết quả phần Thành viên 2
+
+- Notebook thực nghiệm chính: `notebooks/01_main_experiments.ipynb`
+- Báo cáo phần TV2: `docs/member2_report.md`
+- Hình pipeline: `docs/member2_pipeline.svg`
+- Bảng kết quả: `docs/member2_summary.csv`, `docs/member2_aggregate.csv`, `docs/member2_comparison.csv`
+- Hình kết quả huấn luyện: `docs/member2_training_and_accuracy.png`
 
 ## Phân công (Tham khảo `PhanCong.md`)
 - Thành viên 1: Setup data, xử lý dữ liệu và tính toán tỷ lệ Counter (utils.py).
