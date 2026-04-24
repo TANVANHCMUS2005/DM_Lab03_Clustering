@@ -5,6 +5,11 @@ Group_11/docs/*
 # NHƯNG hãy tha mạng, không được bỏ qua file .gitkeep này
 !Group_11/data/.gitkeep
 !Group_11/data/simple_combination_game.csv
+!Group_11/docs/member2_cv_aggregate.csv
+!Group_11/docs/member2_cv_comparison.csv
+!Group_11/docs/member2_cv_fold_summary.csv
+!Group_11/docs/member2_cv_results.json
+!Group_11/docs/member2_cv_training_and_accuracy.png
 # Bỏ qua các file cache của Python/Jupyter
 __pycache__/
 .ipynb_checkpoints/

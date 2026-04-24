@@ -1,0 +1,354 @@
+{
+  "config": {
+    "seed": 42,
+    "num_matches": 100000,
+    "n_splits": 5,
+    "nrt_epochs": 100,
+    "nct_epochs": 100,
+    "learning_rate": 0.00025,
+    "beta_n": 0.01,
+    "beta_m": 0.25,
+    "m_values": [
+      3,
+      9,
+      27,
+      81
+    ]
+  },
+  "fold_summary": [
+    {
+      "fold": 1,
+      "method": "NRT",
+      "accuracy": 0.64975,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": NaN,
+      "utilization_ratio": NaN
+    },
+    {
+      "fold": 1,
+      "method": "NCT (M=3)",
+      "accuracy": 0.64975,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": 1.0,
+      "utilization_ratio": 0.3333333333333333
+    },
+    {
+      "fold": 1,
+      "method": "NCT (M=9)",
+      "accuracy": 0.6505,
+      "silhouette_score": 0.5505738854408264,
+      "davies_bouldin_index": 0.6117317211049804,
+      "calinski_harabasz_index": 40868.8203125,
+      "used_codes": 2.0,
+      "utilization_ratio": 0.2222222222222222
+    },
+    {
+      "fold": 1,
+      "method": "NCT (M=27)",
+      "accuracy": 0.65175,
+      "silhouette_score": 0.06268837302923203,
+      "davies_bouldin_index": 0.8101728281834427,
+      "calinski_harabasz_index": 12226.5126953125,
+      "used_codes": 4.0,
+      "utilization_ratio": 0.14814814814814814
+    },
+    {
+      "fold": 1,
+      "method": "NCT (M=81)",
+      "accuracy": 0.6535,
+      "silhouette_score": 0.19803360104560852,
+      "davies_bouldin_index": 1.038961005075443,
+      "calinski_harabasz_index": 19645.30078125,
+      "used_codes": 4.0,
+      "utilization_ratio": 0.04938271604938271
+    },
+    {
+      "fold": 2,
+      "method": "NRT",
+      "accuracy": 0.65625,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": NaN,
+      "utilization_ratio": NaN
+    },
+    {
+      "fold": 2,
+      "method": "NCT (M=3)",
+      "accuracy": 0.6559,
+      "silhouette_score": 0.3886035084724426,
+      "davies_bouldin_index": 0.5171487251758354,
+      "calinski_harabasz_index": 5917.794921875,
+      "used_codes": 2.0,
+      "utilization_ratio": 0.6666666666666666
+    },
+    {
+      "fold": 2,
+      "method": "NCT (M=9)",
+      "accuracy": 0.65625,
+      "silhouette_score": 0.2634636163711548,
+      "davies_bouldin_index": 0.5354199361959825,
+      "calinski_harabasz_index": 2126.13916015625,
+      "used_codes": 2.0,
+      "utilization_ratio": 0.2222222222222222
+    },
+    {
+      "fold": 2,
+      "method": "NCT (M=27)",
+      "accuracy": 0.65495,
+      "silhouette_score": 0.303423672914505,
+      "davies_bouldin_index": 0.7702188835234526,
+      "calinski_harabasz_index": 29190.984375,
+      "used_codes": 3.0,
+      "utilization_ratio": 0.1111111111111111
+    },
+    {
+      "fold": 2,
+      "method": "NCT (M=81)",
+      "accuracy": 0.65625,
+      "silhouette_score": 0.2643454968929291,
+      "davies_bouldin_index": 0.6865753335825943,
+      "calinski_harabasz_index": 24940.83203125,
+      "used_codes": 3.0,
+      "utilization_ratio": 0.037037037037037035
+    },
+    {
+      "fold": 3,
+      "method": "NRT",
+      "accuracy": 0.6548,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": NaN,
+      "utilization_ratio": NaN
+    },
+    {
+      "fold": 3,
+      "method": "NCT (M=3)",
+      "accuracy": 0.6548,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": 1.0,
+      "utilization_ratio": 0.3333333333333333
+    },
+    {
+      "fold": 3,
+      "method": "NCT (M=9)",
+      "accuracy": 0.6526,
+      "silhouette_score": 0.44500303268432617,
+      "davies_bouldin_index": 0.5984001567076875,
+      "calinski_harabasz_index": 22354.029296875,
+      "used_codes": 2.0,
+      "utilization_ratio": 0.2222222222222222
+    },
+    {
+      "fold": 3,
+      "method": "NCT (M=27)",
+      "accuracy": 0.65515,
+      "silhouette_score": 0.0768074318766594,
+      "davies_bouldin_index": 0.8936132694090043,
+      "calinski_harabasz_index": 16532.734375,
+      "used_codes": 3.0,
+      "utilization_ratio": 0.1111111111111111
+    },
+    {
+      "fold": 3,
+      "method": "NCT (M=81)",
+      "accuracy": 0.65385,
+      "silhouette_score": 0.0979892909526825,
+      "davies_bouldin_index": 0.855840162087412,
+      "calinski_harabasz_index": 15946.8349609375,
+      "used_codes": 3.0,
+      "utilization_ratio": 0.037037037037037035
+    },
+    {
+      "fold": 4,
+      "method": "NRT",
+      "accuracy": 0.658,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": NaN,
+      "utilization_ratio": NaN
+    },
+    {
+      "fold": 4,
+      "method": "NCT (M=3)",
+      "accuracy": 0.658,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": 1.0,
+      "utilization_ratio": 0.3333333333333333
+    },
+    {
+      "fold": 4,
+      "method": "NCT (M=9)",
+      "accuracy": 0.65675,
+      "silhouette_score": 0.5279263854026794,
+      "davies_bouldin_index": 0.6099633447144999,
+      "calinski_harabasz_index": 36352.37109375,
+      "used_codes": 2.0,
+      "utilization_ratio": 0.2222222222222222
+    },
+    {
+      "fold": 4,
+      "method": "NCT (M=27)",
+      "accuracy": 0.65555,
+      "silhouette_score": 0.5255552530288696,
+      "davies_bouldin_index": 0.6414030661447614,
+      "calinski_harabasz_index": 36424.16796875,
+      "used_codes": 2.0,
+      "utilization_ratio": 0.07407407407407407
+    },
+    {
+      "fold": 4,
+      "method": "NCT (M=81)",
+      "accuracy": 0.6571,
+      "silhouette_score": 0.21562787890434265,
+      "davies_bouldin_index": 1.0373757318955494,
+      "calinski_harabasz_index": 22186.92578125,
+      "used_codes": 4.0,
+      "utilization_ratio": 0.04938271604938271
+    },
+    {
+      "fold": 5,
+      "method": "NRT",
+      "accuracy": 0.6581,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": NaN,
+      "utilization_ratio": NaN
+    },
+    {
+      "fold": 5,
+      "method": "NCT (M=3)",
+      "accuracy": 0.6581,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": 1.0,
+      "utilization_ratio": 0.3333333333333333
+    },
+    {
+      "fold": 5,
+      "method": "NCT (M=9)",
+      "accuracy": 0.6581,
+      "silhouette_score": NaN,
+      "davies_bouldin_index": NaN,
+      "calinski_harabasz_index": NaN,
+      "used_codes": 1.0,
+      "utilization_ratio": 0.1111111111111111
+    },
+    {
+      "fold": 5,
+      "method": "NCT (M=27)",
+      "accuracy": 0.66015,
+      "silhouette_score": 0.2551024556159973,
+      "davies_bouldin_index": 0.8068309276309288,
+      "calinski_harabasz_index": 19005.234375,
+      "used_codes": 3.0,
+      "utilization_ratio": 0.1111111111111111
+    },
+    {
+      "fold": 5,
+      "method": "NCT (M=81)",
+      "accuracy": 0.6593,
+      "silhouette_score": 0.11321719735860825,
+      "davies_bouldin_index": 1.947933950898387,
+      "calinski_harabasz_index": 7398.560546875,
+      "used_codes": 7.0,
+      "utilization_ratio": 0.08641975308641975
+    }
+  ],
+  "aggregate": [
+    {
+      "method": "NCT (M=27)",
+      "accuracy_mean": 0.65551,
+      "accuracy_std": 0.003004663042672152,
+      "silhouette_mean": 0.24471543729305267,
+      "dbi_mean": 0.784447794978318,
+      "chi_mean": 22675.9267578125,
+      "used_codes_mean": 3.0,
+      "utilization_mean": 0.11111111111111112
+    },
+    {
+      "method": "NCT (M=3)",
+      "accuracy_mean": 0.6553100000000001,
+      "accuracy_std": 0.0034110848714155604,
+      "silhouette_mean": 0.3886035084724426,
+      "dbi_mean": 0.5171487251758354,
+      "chi_mean": 5917.794921875,
+      "used_codes_mean": 1.2,
+      "utilization_mean": 0.39999999999999997
+    },
+    {
+      "method": "NCT (M=81)",
+      "accuracy_mean": 0.656,
+      "accuracy_std": 0.0023997395692033287,
+      "silhouette_mean": 0.1778426930308342,
+      "dbi_mean": 1.113337236707877,
+      "chi_mean": 18023.6908203125,
+      "used_codes_mean": 4.2,
+      "utilization_mean": 0.05185185185185185
+    },
+    {
+      "method": "NCT (M=9)",
+      "accuracy_mean": 0.65484,
+      "accuracy_std": 0.0031668991142756674,
+      "silhouette_mean": 0.4467417299747467,
+      "dbi_mean": 0.5888787896807876,
+      "chi_mean": 25425.339965820312,
+      "used_codes_mean": 1.8,
+      "utilization_mean": 0.2
+    },
+    {
+      "method": "NRT",
+      "accuracy_mean": 0.6553800000000001,
+      "accuracy_std": 0.0034297594667847737,
+      "silhouette_mean": NaN,
+      "dbi_mean": NaN,
+      "chi_mean": NaN,
+      "used_codes_mean": NaN,
+      "utilization_mean": NaN
+    }
+  ],
+  "comparison": [
+    {
+      "method": "NRT",
+      "paper_accuracy": 0.649,
+      "accuracy_mean": 0.6553800000000001,
+      "relative_deviation": 0.009830508474576352
+    },
+    {
+      "method": "NCT (M=3)",
+      "paper_accuracy": 0.644,
+      "accuracy_mean": 0.6553100000000001,
+      "relative_deviation": 0.0175621118012423
+    },
+    {
+      "method": "NCT (M=9)",
+      "paper_accuracy": 0.642,
+      "accuracy_mean": 0.65484,
+      "relative_deviation": 0.01999999999999994
+    },
+    {
+      "method": "NCT (M=27)",
+      "paper_accuracy": 0.642,
+      "accuracy_mean": 0.65551,
+      "relative_deviation": 0.02104361370716514
+    },
+    {
+      "method": "NCT (M=81)",
+      "paper_accuracy": 0.639,
+      "accuracy_mean": 0.656,
+      "relative_deviation": 0.026604068857590008
+    }
+  ]
+}
