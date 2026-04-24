@@ -4,6 +4,7 @@ Group_11/docs/*
 
 # NHƯNG hãy tha mạng, không được bỏ qua file .gitkeep này
 !Group_11/data/.gitkeep
+!Group_11/data/simple_combination_game.csv
 # Bỏ qua các file cache của Python/Jupyter
 __pycache__/
 .ipynb_checkpoints/
