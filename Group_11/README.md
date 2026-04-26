@@ -19,6 +19,11 @@
 
 2. Các bước thực thi chính sẽ được tiến hành ở thư mục `notebooks/` để hiển thị trực quan nhất tiến trình cũng như kết quả đồ thị.
 
+3. **Chạy code trực tiếp (dành cho GV/chấm điểm):** Nếu Giảng viên muốn chạy code Python trực tiếp thay vì dùng Jupyter Notebook (hoặc chạy trên Colab), thầy có thể thực thi file script trong thư mục `src/`:
+    ```bash
+    python src/run_main_experiments_colab.py
+    ```
+
 ## Dữ liệu Thực nghiệm (Dataset)
 Nhóm hiện dùng dataset mô phỏng **Simple Combination Game** để tái hiện thực nghiệm chính của bài báo.
 
